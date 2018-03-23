@@ -1,0 +1,15 @@
+---
+- name: "Run pep8"
+  shell:
+    pycodestyle --max-line-length 160 --config /dev/null --ignore E305,E402,E722,E741,W503 .
+  register: _pep8
+  ignore_errors: yes
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_env.HOME }}/.local/bin"
+  args:
+    chdir: "{{ zuul.project.src_dir }}"
+
+- name: Set linter failure to true
+  set_fact:
+    linter_failure: true
+  when: _pep8.rc
