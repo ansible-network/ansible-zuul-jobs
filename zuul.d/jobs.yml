@@ -2,6 +2,7 @@
 - job:
     name: ansible-test-sanity
     description: ansible-test sanity
+    run: playbooks/ansible-test-sanity/run.yml
     required-projects:
       - name: ansible/ansible
         override-checkout: stable-2.5
