@@ -1,4 +1,3 @@
----
 - job:
     name: ansible-test-sanity
     description: ansible-test sanity
