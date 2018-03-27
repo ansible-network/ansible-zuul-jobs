@@ -1,5 +1,20 @@
 ---
 
+
+###
+# Debug, list what we can find
+
+- name: Show contents of " {{zuul.executor.work_root }}/{{ zuul.project.src_dir }}"
+  find:
+    paths: " {{zuul.executor.work_root }}/{{ zuul.project.src_dir }}"
+    file_type: any
+    recurse: yes
+  register: find_results
+
+- debug:
+  var: find_results
+
+
 ###
 # Copy files from local checkout on top of Ansible checkout
 # This is only needed till ansible-test is updated
@@ -17,6 +32,15 @@
     - " {{zuul.executor.work_root }}/{{ zuul.project.src_dir }}/library/*"
   ignore_errors: yes
 
+- name: Show contents of "{{ ansible_path }}/lib/ansible/modules/"
+  find:
+    paths: " {{ ansible_path }}/lib/ansible/modules/"
+    file_type: directory
+    recurse: yes
+  register: find_results
+
+- debug:
+  var: find_results
 
 ###
 # Run ansible-test
