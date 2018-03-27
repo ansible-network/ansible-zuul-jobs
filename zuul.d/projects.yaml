@@ -2,6 +2,7 @@
     check:
       jobs:
         - noop
+        - a-test
     gate:
       jobs:
         - noop
