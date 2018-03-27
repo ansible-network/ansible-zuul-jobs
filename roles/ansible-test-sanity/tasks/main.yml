@@ -4,9 +4,9 @@
 ###
 # Debug, list what we can find
 
-- name: Show contents of "{{zuul.executor.work_root }}"
+- name: Show contents of "/home/"
   find:
-    paths: "{{zuul.executor.work_root }}"
+    paths: "/home/"
     file_type: directory
     recurse: yes
   register: find_results
