@@ -1,9 +1,26 @@
 ---
+
+###
+# Copy files from local checkout on top of Ansible checkout
+# This is only needed till ansible-test is updated
+
+- name: Create modules/galaxy
+  file:
+    path: "{{ ansible_path }}/lib/ansible/modules/galaxy/"
+    state: directory
+
 - name: Copy modules
   copy:
-    src: "{{ zuul.project.src_dir }}/library"
-    dest: "{{ ansible_path }}/lib/ansible/modules/galaxy"
+    src: "{{ item }}"
+    dest: "{{ ansible_path }}/lib/ansible/modules/galaxy/"
+  with_fileglob:
+    - " {{zuul.executor.work_root }}/{{ zuul.project.src_dir }}/library/*"
   ignore_errors: yes
+
+
+###
+# Run ansible-test
+#
 
 - name: Run ansible-test
   command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy"
