@@ -1,9 +1,9 @@
 - job:
-    name: ansible-test-sanity
-    description: ansible-test sanity
+    name: ansible-test-sanity
+    description: ansible-test sanity
     run: playbooks/ansible-test-sanity/run.yaml
-    required-projects:
-      - name: ansible/ansible
-        override-checkout: stable-2.5
-    vars:
-      python_version: 2.7 
+    required-projects:
+      - name: ansible/ansible
+        override-checkout: stable-2.5
+    vars:
+      python_version: 2.7 
