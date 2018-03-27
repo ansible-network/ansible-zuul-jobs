@@ -1,0 +1,9 @@
+---
+- job:
+    name: ansible-test-sanity
+    description: ansible-test sanity
+    required-projects:
+      - name: ansible/ansible
+        override-checkout: stable-2.5
+    vars:
+      python_version: 2.7 

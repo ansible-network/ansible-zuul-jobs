@@ -1,0 +1,9 @@
+---
+- name: Copy modules
+  copy:
+    src: "{{ zuul.project.src_dir }}/modules"
+    dest: "{{ ansible_path }}/lib/ansible/modules/galaxy"
+  ignore_errors: yes
+
+- name: Run ansible-test
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy"
