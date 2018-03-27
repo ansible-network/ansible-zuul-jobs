@@ -1,7 +1,7 @@
 ---
 - name: Copy modules
   copy:
-    src: "{{ zuul.project.src_dir }}/modules"
+    src: "{{ zuul.project.src_dir }}/library"
     dest: "{{ ansible_path }}/lib/ansible/modules/galaxy"
   ignore_errors: yes
 

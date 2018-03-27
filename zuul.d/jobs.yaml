@@ -6,4 +6,4 @@
       - name: ansible/ansible
         override-checkout: stable-2.5
     vars:
-      python_version: 2.7 
+      python_version: 2.7
