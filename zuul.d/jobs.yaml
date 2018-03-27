@@ -1,0 +1,8 @@
+---
+- job:
+    name: a-test
+    description: a test
+    branches:
+      - master
+      - devel
+    run: test.yml
