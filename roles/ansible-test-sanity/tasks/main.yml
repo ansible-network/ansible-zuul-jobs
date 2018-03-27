@@ -10,6 +10,7 @@
     file_type: directory
     recurse: yes
   register: find_results
+  delegate_to: localhost
 
 - debug:
     var: find_results
