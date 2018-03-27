@@ -4,6 +4,18 @@
 ###
 # Debug, list what we can find
 
+- name: Show contents of "{{zuul.executor.work_root }}"
+  find:
+    paths: "{{zuul.executor.work_root }}"
+    file_type: directory
+    recurse: yes
+  register: find_results
+
+- debug:
+    var: find_results
+
+
+####
 - name: Show contents of "{{zuul.executor.work_root }}/{{ zuul.project.src_dir }}"
   find:
     paths: "{{zuul.executor.work_root }}/{{ zuul.project.src_dir }}"
