@@ -4,21 +4,14 @@
 ###
 # Debug, list what we can find
 
-- name: Show contents of "/home/"
-  find:
-    paths: "/home/"
-    file_type: directory
-    recurse: yes
-  register: find_results
-
 - debug:
-    var: find_results
+    var: hostvars
 
 
 ####
 - name: Show contents of "{{zuul.executor.work_root }}/{{ zuul.project.src_dir }}"
   find:
-    paths: "{{zuul.executor.work_root }}/{{ zuul.project.src_dir }}"
+    paths: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
     file_type: any
     recurse: yes
   register: find_results
