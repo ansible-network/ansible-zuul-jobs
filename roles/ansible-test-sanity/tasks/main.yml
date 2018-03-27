@@ -7,12 +7,14 @@
 - debug:
     var: hostvars
 
+# "{ ansible_user_dir }}/{{ zuul.project.src_dir }}" =  /home/zuul-worker/src/github.com/ansible-network/network-engine
+# "{{ ansible_path }}/test/runner/ansible-test"
 
 ####
-- name: Show contents of "{{zuul.executor.work_root }}/{{ zuul.project.src_dir }}"
+- name: Show contents of "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
   find:
     paths: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
-    file_type: any
+    file_type: directory
     recurse: yes
   register: find_results
 
@@ -34,7 +36,7 @@
     src: "{{ item }}"
     dest: "{{ ansible_path }}/lib/ansible/modules/galaxy/"
   with_fileglob:
-    - " {{zuul.executor.work_root }}/{{ zuul.project.src_dir }}/library/*"
+    - " {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/*"
   ignore_errors: yes
 
 - name: Show contents of "{{ ansible_path }}/lib/ansible/modules/"
