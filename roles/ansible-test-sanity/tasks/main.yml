@@ -12,11 +12,11 @@
 # "{{ ansible_path }}/test/runner/ansible-test"
 
 ####
-- name: Show contents of "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
-  find:
-    paths: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
-    file_type: directory
-    recurse: yes
+#- name: Show contents of "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
+#  find:
+#    paths: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
+#    file_type: directory
+#    recurse: yes
 
 
 ###
@@ -45,10 +45,8 @@
   ignore_errors: yes
   register: foo
 
-# WITH_ITEMS the above src & directories
-
-- debug:
-    var: foo
+# FIXME: WITH_ITEMS the above src & directories
+# FIXME: lib/network_engine/plugins -> module_utils
 
 - name: Show contents of "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/"
   find:
@@ -57,9 +55,6 @@
     recurse: yes
   register: find_results
 
-- debug:
-    var: find_results
-
 ###
 # Run ansible-test
 #
@@ -67,3 +62,4 @@
 - name: Run ansible-test
   command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/ lib/ansible/plugins/action/"
 
+# FIXME Future copy test/sanity bot meta else where so ansibullbot can source them?
