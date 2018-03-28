@@ -55,6 +55,14 @@
     recurse: yes
   register: find_results
 
+  # FIXME: yaml? -> 
+# FIXME RST
+# FIXME: Markdown - no linter
+ 
+# recursive copy into ansible/zuul test
+# change *copy* modules/ action_plugins to *move*
+
+
 ###
 # Run ansible-test
 #
