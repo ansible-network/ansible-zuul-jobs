@@ -35,6 +35,7 @@
   copy:
     src: "{{ item }}"
     dest: "{{ ansible_path }}/lib/ansible/modules/galaxy/"
+    remote_src: yes
   with_fileglob:
     - " {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/*"
   ignore_errors: yes
