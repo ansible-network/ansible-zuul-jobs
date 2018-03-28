@@ -41,7 +41,7 @@
   register: foo
 
 - name: copy action_plugin
-  shell: "cp {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/action_plugins/* {{ ansible_path }}/lib/ansible/plugins/actions/"
+  shell: "cp {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/action_plugins/* {{ ansible_path }}/lib/ansible/plugins/action/"
   ignore_errors: yes
   register: foo
 
@@ -65,5 +65,5 @@
 #
 
 - name: Run ansible-test
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/ /lib/ansible/plugin/actions/"
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/ /lib/ansible/plugins/action/"
 
