@@ -41,7 +41,7 @@
   register: foo
 
 - name: copy action_plugin
-  shell: "cp {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/action_plugins/* {{ ansible_path }}/lib/ansible/plugin/actions/"
+  shell: "cp {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/action_plugins/* {{ ansible_path }}/lib/ansible/plugins/actions/"
   ignore_errors: yes
   register: foo
 
