@@ -65,5 +65,5 @@
 #
 
 - name: Run ansible-test
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/ /lib/ansible/plugins/action/"
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/ lib/ansible/plugins/action/"
 
