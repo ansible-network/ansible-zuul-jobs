@@ -4,8 +4,9 @@
 ###
 # Debug, list what we can find
 
-- debug:
-    var: hostvars
+#- debug:
+#    var: hostvars
+
 
 # "{ ansible_user_dir }}/{{ zuul.project.src_dir }}" =  /home/zuul-worker/src/github.com/ansible-network/network-engine
 # "{{ ansible_path }}/test/runner/ansible-test"
@@ -16,10 +17,6 @@
     paths: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
     file_type: directory
     recurse: yes
-  register: find_results
-
-- debug:
-    var: find_results
 
 
 ###
@@ -36,8 +33,7 @@
 - name: Create modules/galaxy/__init__.py
   file:
     path: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/__init__.py"
-    state: file
-
+    state: touch
 
 - name: copy modules
   shell: "cp {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/* {{ ansible_path }}/lib/ansible/modules/galaxy/"
