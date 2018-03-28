@@ -28,8 +28,12 @@
 
 - name: Create modules/galaxy
   file:
-    path: "{{ ansible_path }}/lib/ansible/modules/galaxy/"
+    path: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/"
     state: directory
+  register: foo
+
+- debug:
+    var: foo
 
 - name: Copy modules
   copy:
@@ -37,12 +41,16 @@
     dest: "{{ ansible_path }}/lib/ansible/modules/galaxy/"
     remote_src: yes
   with_fileglob:
-    - " {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/*"
+    - "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/*"
   ignore_errors: yes
+  register: foo
 
-- name: Show contents of "{{ ansible_path }}/lib/ansible/modules/"
+- debug:
+    var: foo
+
+- name: Show contents of "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/"
   find:
-    paths: " {{ ansible_path }}/lib/ansible/modules/"
+    paths: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/"
     file_type: directory
     recurse: yes
   register: find_results
