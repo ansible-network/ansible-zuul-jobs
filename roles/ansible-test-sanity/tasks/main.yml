@@ -53,7 +53,7 @@
 - name: Show contents of "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/"
   find:
     paths: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy"
-    file_type: all
+    file_type: any
     recurse: yes
   register: find_results
 
