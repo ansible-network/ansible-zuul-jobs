@@ -35,13 +35,15 @@
 - debug:
     var: foo
 
+# with_* don't support remote so use name
 - name: Copy modules
   copy:
-    src: "{{ item }}"
+    #src: "{{ item }}"
+    src: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/get_config.py"
     dest: "{{ ansible_path }}/lib/ansible/modules/galaxy/"
     remote_src: yes
-  with_fileglob:
-    - "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/*"
+# with_fileglob:
+#   - "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/*"
   ignore_errors: yes
   register: foo
 
@@ -63,4 +65,4 @@
 #
 
 - name: Run ansible-test
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy"
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/"
