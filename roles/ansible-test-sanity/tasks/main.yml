@@ -26,34 +26,38 @@
 # Copy files from local checkout on top of Ansible checkout
 # This is only needed till ansible-test is updated
 
+
 - name: Create modules/galaxy
   file:
     path: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/"
     state: directory
   register: foo
 
-- debug:
-    var: foo
+- name: Create modules/galaxy/__init__.py
+  file:
+    path: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/__init__.py"
+    state: file
 
-# with_* don't support remote so use name
-- name: Copy modules
-  copy:
-    #src: "{{ item }}"
-    src: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/get_config.py"
-    dest: "{{ ansible_path }}/lib/ansible/modules/galaxy/"
-    remote_src: yes
-# with_fileglob:
-#   - "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/*"
+
+- name: copy modules
+  shell: "cp {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/* {{ ansible_path }}/lib/ansible/modules/galaxy/"
   ignore_errors: yes
   register: foo
 
+- name: copy action_plugin
+  shell: "cp {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/action_plugins/* {{ ansible_path }}/lib/ansible/plugin/actions/"
+  ignore_errors: yes
+  register: foo
+
+# WITH_ITEMS the above src & directories
+
 - debug:
     var: foo
 
-- name: Show contents of "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/"
+- name: Show contents of "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/"
   find:
-    paths: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/"
-    file_type: directory
+    paths: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy"
+    file_type: all
     recurse: yes
   register: find_results
 
@@ -65,4 +69,5 @@
 #
 
 - name: Run ansible-test
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/"
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/ /lib/ansible/plugin/actions/"
+
