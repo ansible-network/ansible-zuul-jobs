@@ -1,6 +1,5 @@
 ---
 
-
 ###
 # Debug, list what we can find
 
@@ -11,42 +10,36 @@
 # "{ ansible_user_dir }}/{{ zuul.project.src_dir }}" =  /home/zuul-worker/src/github.com/ansible-network/network-engine
 # "{{ ansible_path }}/test/runner/ansible-test"
 
-####
-#- name: Show contents of "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
-#  find:
-#    paths: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}"
-#    file_type: directory
-#    recurse: yes
-
-
 ###
-# Copy files from local checkout on top of Ansible checkout
-# This is only needed till ansible-test is updated
+# To test this Ansible Role using ansible-test we
+# 1) Copy everything into "{{ ansible_path }}/role-to-test"
+# 2) Move modules, action plugins etc into the correct location under "{{ ansible_path }}/lib/ansible/" so they get tested correctly
+# The above steps are only needed till ansible-test is updated to know about galaxy file structure and check $CWD,
 
 
-- name: Create modules/galaxy
+- name: Create directory structure
   file:
-    path: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/"
-    state: directory
-  register: foo
+    path: "{{ ansible_user_dir }}/{{ ansible_path }}/{{ item.path }}"
+    state: "{{ item.state|default('directory') }}"
+  with_items:
+    - { path: "role-to-test" }
+    - { path: "lib/ansible/modules/galaxy/" }
+    - { path: "lib/ansible/modules/galaxy/__init__.py", state: touch }
+    - { path: "lib/ansible/module_utils/galaxy/" }
+    - { path: "lib/ansible/module_utils/galaxy/__init__.py", state: touch }
 
-- name: Create modules/galaxy/__init__.py
-  file:
-    path: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/__init__.py"
-    state: touch
+# FIXME Detail why we use cp & move (remote, don't care about idempotent, this is temp till ansible-test is updated)
+- name: Copy role into /role-to-test
+  shell: "cp -a {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/* {{ ansible_path }}/role-to-test/"
 
-- name: copy modules
-  shell: "cp {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/library/* {{ ansible_path }}/lib/ansible/modules/galaxy/"
+- name: Move certain files to know locations
+  shell: "mv {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/{{ item.src }} {{ ansible_path }}/{{ item.dest }}"
+  with_items:
+    - { src: "action_plugins/*", dest: "/lib/ansible/plugins/action/"}
+    - { src: "action_plugins/*", dest: "/lib/ansible/modules/galaxy/"}
+    - { src: "lib/*", dest: "/lib/ansible/module_utils/galaxy/"} # FIXME maybe rename this?
   ignore_errors: yes
-  register: foo
 
-- name: copy action_plugin
-  shell: "cp {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/action_plugins/* {{ ansible_path }}/lib/ansible/plugins/action/"
-  ignore_errors: yes
-  register: foo
-
-# FIXME: WITH_ITEMS the above src & directories
-# FIXME: lib/network_engine/plugins -> module_utils
 
 - name: Show contents of "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/"
   find:
@@ -55,19 +48,16 @@
     recurse: yes
   register: find_results
 
-  # FIXME: yaml? -> 
-# FIXME RST
-# FIXME: Markdown - no linter
- 
-# recursive copy into ansible/zuul test
-# change *copy* modules/ action_plugins to *move*
-
-
 ###
 # Run ansible-test
 #
 
 - name: Run ansible-test
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/ lib/ansible/plugins/action/"
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --requirements --python {{ python_version }} --tox lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/"
 
 # FIXME Future copy test/sanity bot meta else where so ansibullbot can source them?
+# FIXME Once work pull out more into vars
+# FIXME exclude tests we don't care about, see Galaxy doc
+# FIXME Python 2.x & 3.x
+# FIXME Review full PR
+# FIXME Markdown test - lightbulb linter? What does sf-jobs use
