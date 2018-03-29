@@ -16,7 +16,7 @@
 # To test this Ansible Role using ansible-test we:
 # 1) Copy everything into "{{ ansible_path }}/role-to-test"
 # 2) Move modules, action plugins etc into the correct location under "{{ ansible_path }}/lib/ansible/" so they get tested correctly
-#    For this we just use shell cp. with_fileglob doesn't support running on remote-node
+#    For this we just use shell mv. with_fileglob doesn't support running on remote-node
 #    As we are running only once we don't care about this being idempotent
 # The above steps are only needed till ansible-test is updated to know about galaxy file structure and check $CWD,
 
@@ -39,7 +39,7 @@
   shell: "mv {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/{{ item.src }} {{ ansible_path }}/{{ item.dest }}"
   with_items:
     - { src: "action_plugins/*", dest: "/lib/ansible/plugins/action/"}
-    - { src: "action_plugins/*", dest: "/lib/ansible/modules/galaxy/"}
+    - { src: "library/*", dest: "/lib/ansible/modules/galaxy/"}
     - { src: "lib/*", dest: "/lib/ansible/module_utils/galaxy/"} # FIXME maybe rename this?
   ignore_errors: yes
 
