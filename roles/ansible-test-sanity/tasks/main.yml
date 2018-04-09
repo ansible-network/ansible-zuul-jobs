@@ -1,0 +1,73 @@
+---
+
+###
+# Debug, list what we can find
+
+#- debug:
+#    var: hostvars
+
+
+# "{ ansible_user_dir }}/{{ zuul.project.src_dir }}" =  /home/zuul-worker/src/github.com/ansible-network/network-engine
+# "{{ ansible_path }}/test/runner/ansible-test"
+
+
+
+###
+# To test this Ansible Role using ansible-test we:
+# 1) Copy everything into "{{ ansible_path }}/role-to-test"
+# 2) Move modules, action plugins etc into the correct location under "{{ ansible_path }}/lib/ansible/" so they get tested correctly
+#    For this we just use shell mv. with_fileglob doesn't support running on remote-node
+#    As we are running only once we don't care about this being idempotent
+# The above steps are only needed till ansible-test is updated to know about galaxy file structure and check $CWD,
+
+# TEMPORARY: START
+- name: Create directory structure under ansible
+  file:
+    path: "{{ ansible_user_dir }}/{{ ansible_path }}/{{ item.path }}"
+    state: "{{ item.state|default('directory') }}"
+  with_items:
+    - { path: "role-to-test" }
+    - { path: "lib/ansible/modules/galaxy/" }
+    - { path: "lib/ansible/modules/galaxy/__init__.py", state: touch }
+    - { path: "lib/ansible/module_utils/galaxy/" }
+    - { path: "lib/ansible/module_utils/galaxy/__init__.py", state: touch }
+
+- name: Copy role into ansible/role-to-test
+  shell: "cp -a {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/* {{ ansible_path }}/role-to-test/"
+
+- name: Move certain files to know locations
+  shell: "mv {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/{{ item.src }} {{ ansible_path }}/{{ item.dest }}"
+  with_items:
+    - { src: "action_plugins/*", dest: "/lib/ansible/plugins/action/"}
+    - { src: "library/*", dest: "/lib/ansible/modules/galaxy/"}
+    - { src: "lib/*", dest: "/lib/ansible/module_utils/galaxy/"} # FIXME maybe rename this?
+  ignore_errors: yes
+
+
+- name: Show contents of "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/"
+  find:
+    paths: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy"
+    file_type: any
+    recurse: yes
+
+# TEMPORARY: END
+
+###
+# Run ansible-test
+#
+
+- name: build test options
+  set_fact:
+    skip_options: '--skip-test azure-requirements --skip-test configure-remoting-ps1 --skip-test integration-aliases --skip-test required-and-default-attributes --skip-test sanity-docs --skip-test test-constraints'
+    test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/'
+
+- name: Run ansible-test
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --color no --python {{ python_version }} --tox {{ skip_options }} {{ test_targets }}"
+
+# FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
+# FIXME Once work pull out more into vars
+# FIXME Python 2.x & 3.x
+#       Would be best to have all version of Python available so ansible-test can only run what's needed - SanityMultipleVersion
+       # Maybe swap to fedora-27 to test on my3 & py3 (zuul-config//zuul.d/jobs.yaml)
+# FIXME Review full PR
+# FIXME Markdown test - lightbulb linter? What does sf-jobs use
