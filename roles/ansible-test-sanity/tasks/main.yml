@@ -31,6 +31,8 @@
     - { path: "lib/ansible/modules/galaxy/__init__.py", state: touch }
     - { path: "lib/ansible/module_utils/galaxy/" }
     - { path: "lib/ansible/module_utils/galaxy/__init__.py", state: touch }
+    - { path: "lib/ansible/plugins/from_galaxy/" }
+    - { path: "lib/ansible/plugins/from_galaxy/__init__.py", state: touch }
 
 - name: Copy role into ansible/role-to-test
   shell: "cp -a {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/* {{ ansible_path }}/role-to-test/"
@@ -40,6 +42,7 @@
   with_items:
     - { src: "action_plugins/*", dest: "/lib/ansible/plugins/action/"}
     - { src: "library/*", dest: "/lib/ansible/modules/galaxy/"}
+    - { src: "lib/plugins/*", dest: "/lib/ansible/plugins/from_galaxy/"}
     - { src: "lib/*", dest: "/lib/ansible/module_utils/galaxy/"} # FIXME maybe rename this?
   ignore_errors: yes
 
@@ -59,7 +62,8 @@
 - name: build test options
   set_fact:
     skip_options: '--skip-test azure-requirements --skip-test configure-remoting-ps1 --skip-test integration-aliases --skip-test required-and-default-attributes --skip-test sanity-docs --skip-test test-constraints'
-    test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/'
+    test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/ lib/ansible/module_utils/galaxy/'
+# FIXME define the full commands here
 
 - name: Run ansible-test -vve
   command: "{{ ansible_path }}/test/runner/ansible-test sanity --color no --tox {{ skip_options }} {{ test_targets }} -vve"
