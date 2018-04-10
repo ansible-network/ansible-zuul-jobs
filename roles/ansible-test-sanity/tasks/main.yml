@@ -62,12 +62,13 @@
     test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/'
 
 - name: Run ansible-test
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity --color no --python {{ python_version }} --tox {{ skip_options }} {{ test_targets }}"
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --color no --tox {{ skip_options }} {{ test_targets }}"
 
+# --python {{ python_version }}
 # FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
 # FIXME Once work pull out more into vars
 # FIXME Python 2.x & 3.x
 #       Would be best to have all version of Python available so ansible-test can only run what's needed - SanityMultipleVersion
-       # Maybe swap to fedora-27 to test on my3 & py3 (zuul-config//zuul.d/jobs.yaml)
+       # Maybe swap to fedora-27 to test on pi3 & py3 (zuul-config//zuul.d/jobs.yaml)
 # FIXME Review full PR
 # FIXME Markdown test - lightbulb linter? What does sf-jobs use

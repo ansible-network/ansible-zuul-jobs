@@ -4,6 +4,10 @@
     run: playbooks/ansible-test-sanity/run.yaml
     required-projects:
       - name: ansible/ansible
-        override-checkout: stable-2.5
+        override-checkout: devel
     vars:
       python_version: 2.7
+    nodeset:
+      nodes:
+        name: container
+        label: f27-oci
