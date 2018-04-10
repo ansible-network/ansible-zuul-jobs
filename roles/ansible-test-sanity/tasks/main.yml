@@ -61,6 +61,9 @@
     skip_options: '--skip-test azure-requirements --skip-test configure-remoting-ps1 --skip-test integration-aliases --skip-test required-and-default-attributes --skip-test sanity-docs --skip-test test-constraints'
     test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/'
 
+- name: Run ansible-test -vve
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --color no --tox {{ skip_options }} {{ test_targets }} -vve"
+
 - name: Run ansible-test
   command: "{{ ansible_path }}/test/runner/ansible-test sanity --color no --tox {{ skip_options }} {{ test_targets }}"
 
