@@ -3,10 +3,12 @@
   package:
     name: python-pip
     state: installed
+  become: yes
 
 - name: Install Ansible pip requirementst.txt
   pip:
     requirements: "{{ ansible_path }}/requirements.txt"
+  become: yes
 
 - name: Start network appliance
   command: "./run_{{ platform }}.sh"
