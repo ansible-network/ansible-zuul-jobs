@@ -42,7 +42,7 @@
   with_items:
     - { src: "action_plugins/*", dest: "/lib/ansible/plugins/action/"}
     - { src: "library/*", dest: "/lib/ansible/modules/galaxy/"}
-    - { src: "lib/plugins/*", dest: "/lib/ansible/plugins/from_galaxy/"}
+    - { src: "lib/*/plugins/*", dest: "/lib/ansible/plugins/from_galaxy/"}
     - { src: "lib/*", dest: "/lib/ansible/module_utils/galaxy/"} # FIXME maybe rename this?
   ignore_errors: yes
 
