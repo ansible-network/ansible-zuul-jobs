@@ -7,4 +7,4 @@
   poll: 0
 
 - name: Run ansible-test network-integration
-  command: "{{ ansible_path }}/test/runner/ansible-test network-integration {{ nos }}_.* --inventory /home/zuul/{{ platform }}/inventory --continue-on-error"
+  command: "{{ ansible_path }}/test/runner/ansible-test network-integration {{ nos }}_.* --inventory /home/zuul/output/{{ platform }}/inventory --continue-on-error"
