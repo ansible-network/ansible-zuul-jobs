@@ -54,7 +54,7 @@
     recurse: yes
 
 - name: Show what has been copied ontop of ansible
-  shell: "git status"
+  shell: "git status -uall"
   args:
     chdir: "{{ ansible_path }}"
   ignore_errors: yes
@@ -66,7 +66,7 @@
 
 - name: build test options
   set_fact:
-    standard_options: '--color no --tox'
+    standard_options: '--color no --docker' # --tox
     skip_options: '--skip-test azure-requirements --skip-test configure-remoting-ps1 --skip-test integration-aliases --skip-test required-and-default-attributes --skip-test sanity-docs --skip-test test-constraints'
     test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/ lib/ansible/module_utils/galaxy/'
 # FIXME define the full commands here
