@@ -1,6 +1,9 @@
 ---
 - name: Start network appliance
-  command: "/home/zuul/output/{{ platform }}/run_{{ platform }}.sh"
+  command: "./run_{{ platform }}.sh"
+    chdir: "/home/zuul/output/{{ platform }}"
+  async: 7200
+  poll: 0
 
 - name: Run ansible-test network-integration
   command: "{{ ansible_path }}/test/runner/ansible-test network-integration {{ nos }}_.* --inventory /home/zuul/{{ platform }}/inventory --continue-on-error"
