@@ -9,6 +9,7 @@
       nos: vyos
       platform: vyos
     nodeset:
+      name: nodeset1
       nodes:
         - name: test-node
           label: ansible-network
