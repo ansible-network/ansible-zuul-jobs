@@ -38,7 +38,7 @@
   shell: "cp -a {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/* {{ ansible_path }}/role-to-test/"
 
 - name: Move certain files to know locations
-  shell: "mv {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/{{ item.src }} {{ ansible_path }}/{{ item.dest }}"
+  shell: "mv {{ ansible_path }}/role-to-test//{{ item.src }} {{ ansible_path }}/{{ item.dest }}"
   with_items:
     - { src: "action_plugins/*", dest: "/lib/ansible/plugins/action/"}
     - { src: "library/*", dest: "/lib/ansible/modules/galaxy/"}
@@ -53,6 +53,11 @@
     file_type: any
     recurse: yes
 
+- name: Show what has been copied ontop of ansible
+  shell: "git status"
+  args:
+    chdir: "{{ ansible_path }}"
+  ignore_errors: yes
 # TEMPORARY: END
 
 ###
@@ -61,15 +66,16 @@
 
 - name: build test options
   set_fact:
+    standard_options: '--color no --tox'
     skip_options: '--skip-test azure-requirements --skip-test configure-remoting-ps1 --skip-test integration-aliases --skip-test required-and-default-attributes --skip-test sanity-docs --skip-test test-constraints'
     test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/ lib/ansible/module_utils/galaxy/'
 # FIXME define the full commands here
 
 - name: Run ansible-test -vve
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity --color no --tox {{ skip_options }} {{ test_targets }} -vve"
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity {{ standard_options }} {{ skip_options }} {{ test_targets }} -vve"
 
 - name: Run ansible-test
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity --color no --tox {{ skip_options }} {{ test_targets }}"
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity {{ standard_options }} {{ skip_options }} {{ test_targets }}"
 
 # --python {{ python_version }}
 # FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
