@@ -6,8 +6,7 @@
   become: yes
 
 - name: Install Ansible pip requirementst.txt
-  pip:
-    requirements: "{{ ansible_path }}/requirements.txt"
+  command: "pip install -r {{ ansible_path }}/requirements.txt"
   become: yes
 
 - name: Start network appliance
