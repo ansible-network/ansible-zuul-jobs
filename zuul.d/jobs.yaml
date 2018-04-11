@@ -1,0 +1,14 @@
+- job:
+    name: ansible-test-network-integration-vyos-devel
+    description: ansible-test network-integration
+    run: playbooks/ansible-test-network-integration/run.yaml
+    required-projects:
+      - name: ansible/ansible
+        override-checkout: devel
+    vars:
+      nos: vyos
+      platform: vyos
+    nodeset:
+      nodes:
+        name: test-node
+        label: ansible-network
