@@ -10,5 +10,5 @@
       platform: vyos
     nodeset:
       nodes:
-        name: test-node
-        label: ansible-network
+        - name: test-node
+          label: ansible-network
