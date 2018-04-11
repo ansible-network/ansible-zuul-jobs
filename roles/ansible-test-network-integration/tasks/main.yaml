@@ -1,4 +1,13 @@
 ---
+- name: Install pip
+  package:
+    name: python-pip
+    state: installed
+
+- name: Install Ansible pip requirementst.txt
+  pip:
+    requirements: "{{ ansible_path }}"/requirements.txt
+
 - name: Start network appliance
   command: "./run_{{ platform }}.sh"
   args:
