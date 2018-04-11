@@ -1,6 +1,7 @@
 ---
 - name: Start network appliance
   command: "./run_{{ platform }}.sh"
+  args:
     chdir: "/home/zuul/output/{{ platform }}"
   async: 7200
   poll: 0
