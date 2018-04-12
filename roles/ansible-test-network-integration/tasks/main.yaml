@@ -10,5 +10,10 @@
   async: 7200
   poll: 0
 
+- name: Wait for VM SSH
+  wait_for:
+    port: 8022
+    search_regex: SSH
+
 - name: Run ansible-test network-integration
   command: "{{ ansible_path }}/test/runner/ansible-test network-integration {{ nos }}_.* --inventory /home/zuul/output/{{ platform }}/inventory --continue-on-error"
