@@ -71,17 +71,18 @@
     test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/ lib/ansible/module_utils/galaxy/'
 # FIXME define the full commands here
 
-- name: Run ansible-test -vve
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity {{ standard_options }} {{ skip_options }} {{ test_targets }} -vve"
+# Firstly run all the tests (exec skip_options) against Python 3.x
+- name: Run ansible-test against python 3.6
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --python 3.6 {{ standard_options }} {{ skip_options }} {{ test_targets }}"
 
+ # Run each of theSanityMultipleVersion tests against the remaining available Python versions
 - name: Run ansible-test
-  command: "{{ ansible_path }}/test/runner/ansible-test sanity {{ standard_options }} {{ skip_options }} {{ test_targets }}"
-
-# --python {{ python_version }}
+  command: "{{ ansible_path }}/test/runner/ansible-test sanity --python {{ item }} {{ standard_options }} --test ansible-doc --test compile --test import {{ test_targets }}"
+  with_items:
+    - "2.6"
+    - "2.7"
+    - "3.5"
 # FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
 # FIXME Once work pull out more into vars
-# FIXME Python 2.x & 3.x
-#       Would be best to have all version of Python available so ansible-test can only run what's needed - SanityMultipleVersion
-       # Maybe swap to fedora-27 to test on pi3 & py3 (zuul-config//zuul.d/jobs.yaml)
 # FIXME Review full PR
 # FIXME Markdown test - lightbulb linter? What does sf-jobs use
