@@ -1,4 +1,9 @@
 ---
+- name: Open console stream port
+  firewalld:
+    port: 19885/tcp
+    state: enabled
+
 - name: Install pip
   package:
     name: python-pip
