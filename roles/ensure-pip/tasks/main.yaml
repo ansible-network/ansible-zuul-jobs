@@ -1,0 +1,4 @@
+---
+- name: Ensure pip is installed
+  shell: type pip || dnf -y install python-pip
+  become: yes

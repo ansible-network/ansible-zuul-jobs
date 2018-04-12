@@ -2,6 +2,7 @@
     check:
       jobs:
         - tox-linters
+        - ansible-test-network-integration-vyos-devel
     gate:
       jobs:
         - tox-linters
