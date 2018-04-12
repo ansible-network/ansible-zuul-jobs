@@ -1,14 +1,4 @@
 ---
-- name: Open console stream port
-  shell: firewall-cmd --permanent --add-port=19885/tcp
-  become: yes
-
-- name: Install pip
-  package:
-    name: python-pip
-    state: installed
-  become: yes
-
 - name: Install Ansible pip requirementst.txt
   command: "pip install -r {{ ansible_path }}/requirements.txt"
   become: yes
