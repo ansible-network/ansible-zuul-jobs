@@ -74,6 +74,9 @@
 # Firstly run all the tests (exec skip_options) against Python 3.x
 - name: Run ansible-test against python 3.6
   command: "{{ ansible_path }}/test/runner/ansible-test sanity --python 3.6 {{ standard_options }} {{ skip_options }} {{ test_targets }}"
+  ignore_errors: yes
+  # Even if this fails. continue to the next text run
+  register: ansible_test_run_one
 
  # Run each of theSanityMultipleVersion tests against the remaining available Python versions
 - name: Run ansible-test
@@ -82,7 +85,13 @@
     - "2.6"
     - "2.7"
     - "3.5"
-# FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
+
+- name: One or more ansible-test runs have failed
+  fail:
+    msg: One or more ansible-test runs have failed
+  when: ansible_test_run_one.failed
+
+  # FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
 # FIXME Once work pull out more into vars
 # FIXME Review full PR
 # FIXME Markdown test - lightbulb linter? What does sf-jobs use
