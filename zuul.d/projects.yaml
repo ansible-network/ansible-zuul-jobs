@@ -1,6 +1,5 @@
 - project:
     check:
-      debug: True
       jobs:
         - tox-linters
         - ansible-test-network-integration-vyos-devel
