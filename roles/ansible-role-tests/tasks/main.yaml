@@ -1,11 +1,6 @@
-- name: Clone stable-2.5 ansible
-  git:
-    repo: 'https://github.com/ansible/ansible.git'
-    dest: '/home/zuul/'
-    version: 'stable-2.5'
-
-- name: Enable stable-2.5 environment
-  command: 'source /home/zuul/ansible/hacking/env-setup'
+- name: Install latest ansible
+  command: pip install ansible
+  become: yes
 
 - name: Run ansible-role-tests
   command: 'ansible-playbook --inventory ./inventory test.yml'
