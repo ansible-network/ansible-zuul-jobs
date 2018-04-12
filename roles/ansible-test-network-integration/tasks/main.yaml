@@ -1,8 +1,7 @@
 ---
 - name: Open console stream port
-  firewalld:
-    port: 19885/tcp
-    state: enabled
+  shell: firewall-cmd --permanent --add-port=19885/tcp
+  become: yes
 
 - name: Install pip
   package:
