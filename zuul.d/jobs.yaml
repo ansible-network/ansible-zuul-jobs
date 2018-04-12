@@ -1,0 +1,7 @@
+- job:
+    name: ansible-role-tests
+    description: ansible-role tests
+    run: playbooks/ansible-role-tests/run.yaml
+    required-projects:
+      - name: ansible-network/network-engine-zuul
+        override-checkout: devel
