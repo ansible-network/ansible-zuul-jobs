@@ -1,5 +1,12 @@
-- name: Install latest Ansible
-  command: 'pip install --user ansible==2.5.0'
+- name: Install Ansible
+  pip:
+    name: ansible
+    version: "2.5.0"
+ 
+- name: Install textfsm
+  pip:
+    name: textfsm
+    state: present
 
 - name: Run ansible-role-tests for network-engine
   command: "{{ item }}"
