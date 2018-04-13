@@ -2,6 +2,7 @@
     check:
       jobs:
         - tox-linters
+        - ansible-role-tests
     gate:
       jobs:
         - tox-linters

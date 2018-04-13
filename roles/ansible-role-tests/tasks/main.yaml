@@ -1,0 +1,18 @@
+# As root file system is read only install packages with `--user`
+# Ansible is already installed, so install we are using the latest version
+- name: Install latest stable version of Ansible
+  pip:
+    name: ansible
+    extra_args: --user
+    state: forcereinstall
+
+- name: Install textfsm
+  pip:
+    name: textfsm
+    extra_args: --user
+
+# FIXME Future: Need to run this under different Python versions
+- name: Run integration tests
+  command: "ansible-playbook --inventory ./inventory test.yml -vv"
+  args:
+    chdir: "{{ ansible_network_engine_path }}/tests/"
