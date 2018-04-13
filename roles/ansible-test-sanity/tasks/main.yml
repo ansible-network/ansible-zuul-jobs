@@ -1,16 +1,9 @@
 ---
 
 ###
-# Debug, list what we can find
-
-#- debug:
-#    var: hostvars
-
-
-# "{ ansible_user_dir }}/{{ zuul.project.src_dir }}" =  /home/zuul-worker/src/github.com/ansible-network/network-engine
-# "{{ ansible_path }}/test/runner/ansible-test"
-
-
+# Code lint, smell, compile test
+# See: http://docs.ansible.com/ansible/devel/dev_guide/testing_sanity.html
+#      http://docs.ansible.com/ansible/devel/dev_guide/testing/sanity/
 
 ###
 # To test this Ansible Role using ansible-test we:
@@ -18,10 +11,10 @@
 # 2) Move modules, action plugins etc into the correct location under "{{ ansible_path }}/lib/ansible/" so they get tested correctly
 #    For this we just use shell mv. with_fileglob doesn't support running on remote-node
 #    As we are running only once we don't care about this being idempotent
-# The above steps are only needed till ansible-test is updated to know about galaxy file structure and check $CWD,
+# The above steps are only needed till ansible-test is updated to know about galaxy file structure and test $CWD, rather than an Ansible checkout
 
 # TEMPORARY: START
-- name: Create directory structure under ansible
+- name: Create directory structure under Ansible checkout
   file:
     path: "{{ ansible_user_dir }}/{{ ansible_path }}/{{ item.path }}"
     state: "{{ item.state|default('directory') }}"
@@ -37,7 +30,7 @@
 - name: Copy role into ansible/role-to-test
   shell: "cp -a {{ ansible_user_dir }}/{{ zuul.project.src_dir }}/* {{ ansible_path }}/role-to-test/"
 
-- name: Move certain files to know locations
+- name: Move certain files to know locations so correct tests are run
   shell: "mv {{ ansible_path }}/role-to-test//{{ item.src }} {{ ansible_path }}/{{ item.dest }}"
   with_items:
     - { src: "action_plugins/*", dest: "/lib/ansible/plugins/action/"}
@@ -46,14 +39,7 @@
     - { src: "lib/*", dest: "/lib/ansible/module_utils/galaxy/"} # FIXME maybe rename this?
   ignore_errors: yes
 
-
-- name: Show contents of "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy/"
-  find:
-    paths: "{{ ansible_user_dir }}/{{ ansible_path }}/lib/ansible/modules/galaxy"
-    file_type: any
-    recurse: yes
-
-- name: Show what has been copied ontop of ansible
+- name: Show what has been copied ontop of Ansible checkout
   shell: "git status -uall"
   args:
     chdir: "{{ ansible_path }}"
@@ -64,35 +50,36 @@
 # Run ansible-test
 #
 
-- name: build test options
+- name: Build test options
   set_fact:
     standard_options: '--color no --tox'
     skip_options: '--skip-test azure-requirements --skip-test configure-remoting-ps1 --skip-test integration-aliases --skip-test required-and-default-attributes --skip-test sanity-docs --skip-test test-constraints'
     test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/ lib/ansible/module_utils/galaxy/'
-# FIXME define the full commands here
 
 # Firstly run all the tests (exec skip_options) against Python 3.x
-- name: Run ansible-test against python 3.6
+- name: Run ansible-test against Python 3.6
   command: "{{ ansible_path }}/test/runner/ansible-test sanity --python 3.6 {{ standard_options }} {{ skip_options }} {{ test_targets }}"
   ignore_errors: yes
   # Even if this fails. continue to the next text run
   register: ansible_test_run_one
 
- # Run each of theSanityMultipleVersion tests against the remaining available Python versions
-- name: Run ansible-test
+ # Run each of the SanityMultipleVersion tests against the remaining available Python versions
+- name: Run ansible-test for SanityMultipleVersion
   command: "{{ ansible_path }}/test/runner/ansible-test sanity --python {{ item }} {{ standard_options }} --test ansible-doc --test compile --test import {{ test_targets }}"
   with_items:
     - "2.6"
     - "2.7"
     - "3.5"
 
-# Question: Should this be replaced with `ansible-test --failure-ok` https://github.com/ansible/ansible/blob/stable-2.3/test/utils/shippable/other.sh#L22
+
+# FIXME: replace with: https://github.com/ansible/ansible/blob/stable-2.3/test/utils/shippable/other.sh#L22
+#        Create temp file
+#        Delete temp
+#        fail when
 - name: One or more ansible-test runs have failed
   fail:
     msg: One or more ansible-test runs have failed
   when: ansible_test_run_one.failed
 
-  # FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
-# FIXME Once work pull out more into vars
-# FIXME Review full PR
-# FIXME Markdown test - lightbulb linter? What does sf-jobs use
+# FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
+# FIXME FUTURE Python 3.7 support

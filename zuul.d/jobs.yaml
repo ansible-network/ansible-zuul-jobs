@@ -3,11 +3,18 @@
     description: ansible-test sanity
     run: playbooks/ansible-test-sanity/run.yaml
     required-projects:
+      # Needed for access to ansible-test
       - name: ansible/ansible
         override-checkout: devel
-    vars:
-      python_version: 2.7
     nodeset:
       nodes:
+        # We need a container with various Python versions available
         name: container
         label: f27-oci
+- job:
+    name: ansible-role-tests
+    description: ansible-role tests
+    run: playbooks/ansible-role-tests/run.yaml
+    required-projects:
+      - name: ansible-network/network-engine-zuul
+        override-checkout: devel
