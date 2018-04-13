@@ -1,7 +1,8 @@
 - project:
     check:
       jobs:
-        - noop
+        - tox-linters
+        - ansible-role-tests
     gate:
       jobs:
-        - noop
+        - tox-linters
