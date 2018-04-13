@@ -1,7 +1,5 @@
-- name: "Enable Ansible 2.5 environment"
-  command: "source hacking/env-setup"
-  args:
-    chdir: "{{ ansible_path }}"
+- name: Install latest Ansible
+  command: 'pip install --user ansible'
 
 - name: Run ansible-role-tests for network-engine
   command: 'ansible-playbook --inventory ./inventory test.yml'
