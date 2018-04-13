@@ -1,7 +1,7 @@
 - name: Install Ansible
   pip:
     name: ansible
-    version: "2.5.0"
+    #version: "2.5.0"
     extra_args: --user
     state: present
 
@@ -11,9 +11,6 @@
     extra_args: --user
 
 - name: Run ansible-role-tests for network-engine
-  command: "{{ item }}"
+  command: "ansible-playbook --inventory ./inventory test.yml -vv"
   args:
     chdir: "{{ ansible_network_engine_path }}/tests/"
-  with_items:
-    - 'ls -l'
-    - 'ansible-playbook --inventory ./inventory test.yml -vv'
