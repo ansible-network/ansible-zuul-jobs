@@ -2,11 +2,13 @@
   pip:
     name: ansible
     version: "2.5.0"
- 
+    extra_args: --user
+    state: present
+
 - name: Install textfsm
   pip:
     name: textfsm
-    state: present
+    extra_args: --user
 
 - name: Run ansible-role-tests for network-engine
   command: "{{ item }}"
