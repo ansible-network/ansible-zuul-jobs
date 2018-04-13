@@ -1,8 +1,9 @@
-- name: Install latest ansible
-  command: pip install ansible
-  become: yes
+- name: "Enable Ansible 2.5 environment"
+  command: "source hacking/env-setup"
+  args:
+    chdir: "{{ ansible_path }}"
 
-- name: Run ansible-role-tests
+- name: Run ansible-role-tests for network-engine
   command: 'ansible-playbook --inventory ./inventory test.yml'
   args:
     chdir: "{{ ansible_network_engine_path }}/tests/"

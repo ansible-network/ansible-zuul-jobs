@@ -3,5 +3,7 @@
     description: ansible-role tests
     run: playbooks/ansible-role-tests/run.yaml
     required-projects:
+      - name: ansible/ansible
+        override-checkout: stable-2.5
       - name: ansible-network/network-engine-zuul
         override-checkout: devel
