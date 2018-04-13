@@ -7,5 +7,4 @@
     chdir: "{{ ansible_network_engine_path }}/tests/"
   with_items:
     - 'ls -l'
-    - ' ssh -vvvvv -o "BatchMode yes" localhost whoami'
     - 'ansible-playbook --inventory ./inventory test.yml -vv'
