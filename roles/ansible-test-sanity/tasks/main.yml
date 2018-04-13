@@ -86,6 +86,7 @@
     - "2.7"
     - "3.5"
 
+# Question: Should this be replaced with `ansible-test --failure-ok` https://github.com/ansible/ansible/blob/stable-2.3/test/utils/shippable/other.sh#L22
 - name: One or more ansible-test runs have failed
   fail:
     msg: One or more ansible-test runs have failed
