@@ -1,5 +1,5 @@
 - name: Install latest Ansible
-  command: 'pip install --user ansible'
+  command: 'pip install --user ansible==2.5.0'
 
 - name: Run ansible-role-tests for network-engine
   command: 'ansible-playbook --inventory ./inventory test.yml'
