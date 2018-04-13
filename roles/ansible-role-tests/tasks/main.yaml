@@ -3,7 +3,7 @@
     name: ansible
     #version: "2.5.0"
     extra_args: --user
-    state: present
+    state: forcereinstall
 
 - name: Install textfsm
   pip:
