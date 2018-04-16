@@ -53,7 +53,7 @@
 - name: Build test options
   set_fact:
     standard_options: '--color no --tox'
-    skip_options: '--skip-test azure-requirements --skip-test configure-remoting-ps1 --skip-test integration-aliases --skip-test required-and-default-attributes --skip-test sanity-docs --skip-test test-constraints'
+    skip_options: '--skip-test azure-requirements --skip-test configure-remoting-ps1 --skip-test integration-aliases --skip-test required-and-default-attributes --skip-test sanity-docs --skip-test test-constraints --skip-test docs-build'
     test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/ lib/ansible/module_utils/galaxy/'
 
 # Firstly run all the tests (exec skip_options) against Python 3.x
