@@ -7,13 +7,37 @@
 
 ###
 # To test this Ansible Role using ansible-test we:
-# 1) Copy everything into "{{ ansible_path }}/role-to-test"
-# 2) Move modules, action plugins etc into the correct location under "{{ ansible_path }}/lib/ansible/" so they get tested correctly
+# 1) Create results directory structure, which in the future can be used for ansibullbot
+# 2) Copy everything into "{{ ansible_path }}/role-to-test"
+# 3) Move modules, action plugins etc into the correct location under "{{ ansible_path }}/lib/ansible/" so they get tested correctly
 #    For this we just use shell mv. with_fileglob doesn't support running on remote-node
 #    As we are running only once we don't care about this being idempotent
 # The above steps are only needed till ansible-test is updated to know about galaxy file structure and test $CWD, rather than an Ansible checkout
 
+###
+# Setup results structure
+#
+
+# Ensure we have clean results structure to store results files
+# This could be used in the future to enable ansibullbot
+- name: Ensure previous results files have been removed
+  file:
+    path: "{{ ansible_path }}/test/results/bot"
+    state: absent
+
+- name: Create results directory
+  file:
+    path: "{{ ansible_path }}/test/results/bot"
+    state: directory
+
+- name: Create sub results file
+  copy:
+    content: '{"verified": false, "results": []}'
+    dest: "{{ ansible_path }}/test/results/bot/ansible-test-failure.json"
+
+##
 # TEMPORARY: START
+#
 - name: Create directory structure under Ansible checkout
   file:
     path: "{{ ansible_user_dir }}/{{ ansible_path }}/{{ item.path }}"
@@ -52,7 +76,7 @@
 
 - name: Build test options
   set_fact:
-    standard_options: '--color no --tox'
+    standard_options: '--color no --tox --failure-ok --junit'
     skip_options: '--skip-test azure-requirements --skip-test configure-remoting-ps1 --skip-test integration-aliases --skip-test required-and-default-attributes --skip-test sanity-docs --skip-test test-constraints --skip-test docs-build'
     test_targets: 'lib/ansible/modules/galaxy/ lib/ansible/module_utils/galaxy/ lib/ansible/plugins/action/ role-to-test/ lib/ansible/module_utils/galaxy/'
 
@@ -71,15 +95,18 @@
     - "2.7"
     - "3.5"
 
+# Check for failures
+- name: Examine results files
+  find:
+    path: "{{ ansible_path }}/test/results/bot"
+    exclude: ansible-test-failure.json
+  register: results_files
 
-# FIXME: replace with: https://github.com/ansible/ansible/blob/stable-2.3/test/utils/shippable/other.sh#L22
-#        Create temp file
-#        Delete temp
-#        fail when
-- name: One or more ansible-test runs have failed
+- name: Check for failing tests
   fail:
-    msg: One or more ansible-test runs have failed
-  when: ansible_test_run_one.failed
+    msg: One or more tests have failed
+  when:
+    results_files.matched
 
 # FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
 # FIXME FUTURE Python 3.7 support
