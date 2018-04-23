@@ -99,14 +99,13 @@
 - name: Examine results files
   find:
     path: "{{ ansible_path }}/test/results/bot"
-    exclude: ansible-test-failure.json
   register: results_files
 
 - name: Check for failing tests
   fail:
     msg: One or more tests have failed
   when:
-    results_files.matched
+    results_files.matched > 1
 
 # FIXME FUTURE copy test/sanity bot meta else where so ansibullbot can source them?
 # FIXME FUTURE Python 3.7 support
