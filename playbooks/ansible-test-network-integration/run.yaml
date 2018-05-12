@@ -1,5 +1,4 @@
 ---
 - hosts: all
   roles:
-    - ensure-pip
     - ansible-test-network-integration
