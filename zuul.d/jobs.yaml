@@ -1,3 +1,7 @@
+##
+# `ansible-test sanity`
+# Single job tests multiple Python versions
+#
 - job:
     name: ansible-test-sanity
     description: ansible-test sanity
@@ -11,10 +15,78 @@
         # We need a container with various Python versions available
         name: container
         label: f27-oci
-- job:
+
+##
+# ansible-role-tests
+#   ansible:stable py2 & py3
+#   ansible:devel  py2
+#
+
+- job: # REMOVE THIS once live
     name: ansible-role-tests
-    description: ansible-role tests
+    description: ansible-role tests against Stable Ansible with Python 2
     run: playbooks/ansible-role-tests/run.yaml
     required-projects:
       - name: ansible-network/network-engine-zuul
         override-checkout: devel
+    vars:
+      pip: pip2
+    nodeset:
+      nodes:
+        # We need a container with various Python versions available
+        name: container
+        label: f27-oci
+- job:
+    name: ansible-role-tests-base
+    description: |
+      Parent job for ``ansible role`` tests for testing against different
+      Ansible and Python versions
+
+      Responds to these variables:
+
+      .. zuul:jobvar:: pip
+
+         Name of pip binary to use to install dependencies to allow testing
+         against different Python versions.
+
+         Example ``pip2`` or ``pip3``
+
+      .. zuul:jobvar:: ansible_pip_package
+
+         Provides the ability to pip install different versions of Ansible
+
+         Example ``ansible`` or ``"git+https://github.com/ansible/ansible.git@devel"``
+
+    run: playbooks/ansible-role-tests/run.yaml
+    required-projects:
+      - name: ansible-network/network-engine-zuul
+        override-checkout: devel
+    nodeset:
+      nodes:
+        # We need a container with various Python versions available
+        name: container
+        label: f27-oci
+
+- job:
+    name: ansible-role-tests-stable-py2
+    description: ansible-role tests against stable Ansible with Python 2
+    parent: ansible-role-tests-base
+    vars:
+      pip: pip2
+      ansible_pip_package: ansible
+
+- job:
+    name: ansible-role-tests-stable-py3
+    description: ansible-role tests against stable Ansible with Python 3
+    parent: ansible-role-tests-base
+    vars:
+      pip: pip3
+      ansible_pip_package: ansible
+
+- job:
+    name: ansible-role-tests-devel-py2
+    description: ansible-role tests against devel Ansible with Python 2
+    parent: ansible-role-tests-base
+    vars:
+      pip: pip2
+      ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"

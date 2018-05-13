@@ -1,18 +1,21 @@
 # As root file system is read only install packages with `--user`
-# Ansible is already installed, so install we are using the latest version
-- name: Install latest stable version of Ansible
+# Ansible is already installed, so install we are `--force` installing the correct version
+
+- name: Install the required version of Ansible
   pip:
-    name: ansible
+    name: "{{ ansible_pip_package }}"
     extra_args: --user
     state: forcereinstall
+    executable: "{{ pip }}"
 
 - name: Install textfsm
   pip:
     name: textfsm
     extra_args: --user
+    executable: "{{ pip }}"
 
-# FIXME Future: Need to run this under different Python versions
+# FIXME May need to add a sanity check that ansible --version returns the correct version of Python
 - name: Run integration tests
-  command: "ansible-playbook --inventory ./inventory test.yml -vv"
+  command: "/home/zuul-worker/.local/bin/ansible-playbook --inventory ./inventory test.yml -vv"
   args:
     chdir: "{{ ansible_network_engine_path }}/tests/"
