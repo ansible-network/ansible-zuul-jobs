@@ -90,3 +90,57 @@
     vars:
       pip: pip2
       ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
+
+##
+# ansible-test-network-integration
+#   Will move to ansible/ansible soon
+#   Just here for testing with sf-webhook till sf-webhook is enabled on ansible/ansible
+#
+
+- job:
+    name: ansible-test-network-integration
+    description: |
+       Parent job for ``ansible-test network-integration`` tests.
+
+       Responds to these variables:
+
+       .. zuul:jobvar:: python_version
+
+          Instruct ansible-test to test against this version of Python.
+
+          Example ``2.6``, ``2.7``, ``3.5``, ``3.6``
+
+       .. zuul:jobvar:: platform
+
+          Network platform to test against, such as ``eos``, ``ios``, ``vyos``
+    run: playbooks/ansible-test-network-integration/run.yaml
+    # use debug from ansible-network/zuul-config#18
+    parent: base-test
+    required-projects:
+      # FIXME When this zuul job is moved to ansible/ansible this will be removed as context will be the given PR
+      - name: ansible/ansible
+        override-checkout: devel
+
+- job:
+    name: ansible-test-network-integration-vyos-devel-py2
+    description: ansible-test network-integration on Python 2
+    parent: ansible-test-network-integration
+    vars:
+      platform: vyos
+      python_version: 2.7
+    nodeset:
+      nodes:
+        - name: test-node
+          label: ansible-network-vyos-1.1.8
+
+- job:
+    name: ansible-test-network-integration-vyos-devel-py3
+    description: ansible-test network-integration on Python 3
+    parent: ansible-test-network-integration
+    vars:
+      platform: vyos
+      python_version: 3.6
+    nodeset:
+      nodes:
+        - name: test-node
+          label: ansible-network-vyos-1.1.8
