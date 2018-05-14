@@ -114,8 +114,6 @@
 
           Network platform to test against, such as ``eos``, ``ios``, ``vyos``
     run: playbooks/ansible-test-network-integration/run.yaml
-    # use debug from ansible-network/zuul-config#18
-    parent: base-test
     required-projects:
       # FIXME When this zuul job is moved to ansible/ansible this will be removed as context will be the given PR
       - name: ansible/ansible
