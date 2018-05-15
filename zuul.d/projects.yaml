@@ -5,6 +5,8 @@
         - ansible-role-tests-stable-py2
         - ansible-role-tests-stable-py3
         - ansible-role-tests-devel-py2
+        - ansible-test-network-integration-vyos-devel-py2
+        - ansible-test-network-integration-vyos-devel-py3
     gate:
       jobs:
         - tox-linters
