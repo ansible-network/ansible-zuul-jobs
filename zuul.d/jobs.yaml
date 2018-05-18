@@ -31,6 +31,7 @@
         override-checkout: devel
     vars:
       pip: pip2
+      ansible_pip_package: ansible
     nodeset:
       nodes:
         # We need a container with various Python versions available
