@@ -18,4 +18,4 @@
 - name: Run integration tests
   command: "/home/zuul-worker/.local/bin/ansible-playbook --inventory ./inventory test.yml -vv"
   args:
-    chdir: "{{ ansible_network_engine_path }}/tests/"
+    chdir: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/tests/"
