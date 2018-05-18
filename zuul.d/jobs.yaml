@@ -9,7 +9,7 @@
     required-projects:
       # Needed for access to ansible-test
       - name: ansible/ansible
-        override-checkout: devel
+        override-checkout: stable-2.5
     nodeset:
       nodes:
         # We need a container with various Python versions available
