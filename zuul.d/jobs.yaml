@@ -22,18 +22,6 @@
 #   ansible:devel  py2
 #
 
-- job: # REMOVE THIS once live
-    name: ansible-role-tests
-    description: ansible-role tests against Stable Ansible with Python 2
-    run: playbooks/ansible-role-tests/run.yaml
-    vars:
-      pip: pip2
-      ansible_pip_package: ansible
-    nodeset:
-      nodes:
-        # We need a container with various Python versions available
-        name: container
-        label: f27-oci
 - job:
     name: ansible-role-tests-base
     description: |
