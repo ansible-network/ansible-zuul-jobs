@@ -66,6 +66,24 @@
       pip: pip3
       ansible_pip_package: ansible
 
+# START: TMP while stable != stable-2.6
+- job:
+    name: ansible-role-tests-2.6-py2
+    description: ansible-role tests against stable-2.6 Ansible with Python 2
+    parent: ansible-role-tests-base
+    vars:
+      pip: pip2
+      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.6"
+
+- job:
+    name: ansible-role-tests-2.6-py3
+    description: ansible-role tests against stable-2.6 Ansible with Python 3
+    parent: ansible-role-tests-base
+    vars:
+      pip: pip3
+      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.6"
+
+# END: TMP while stable != stable-2.6
 - job:
     name: ansible-role-tests-devel-py2
     description: ansible-role tests against devel Ansible with Python 2
