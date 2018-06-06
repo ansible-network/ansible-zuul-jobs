@@ -14,6 +14,12 @@
     extra_args: --user
     executable: "{{ pip }}"
 
+- name: Install pyang
+  pip:
+    name: pyang
+    extra_args: --user
+    executable: "{{ pip }}"
+
 # FIXME May need to add a sanity check that ansible --version returns the correct version of Python
 - name: Run integration tests
   command: "/home/zuul-worker/.local/bin/ansible-playbook --inventory ./inventory test.yml -vv"
