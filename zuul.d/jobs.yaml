@@ -18,8 +18,6 @@
 
 ##
 # ansible-role-tests
-#   ansible:stable py2 & py3
-#   ansible:devel  py2
 #
 
 - job:
@@ -50,23 +48,21 @@
         name: container
         label: f27-oci
 
+# All Ansible Core versions that are supported since Ansible 2.5 need to be listed here
+# as the job definitions are used by all repos
+
+##
+# devel
 - job:
-    name: ansible-role-tests-stable-py2
-    description: ansible-role tests against stable Ansible with Python 2
+    name: ansible-role-tests-devel-py2
+    description: ansible-role tests against devel Ansible with Python 2
     parent: ansible-role-tests-base
     vars:
       pip: pip2
-      ansible_pip_package: ansible
+      ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
 
-- job:
-    name: ansible-role-tests-stable-py3
-    description: ansible-role tests against stable Ansible with Python 3
-    parent: ansible-role-tests-base
-    vars:
-      pip: pip3
-      ansible_pip_package: ansible
-
-# START: TMP while stable != stable-2.6
+##
+# stable-2.6
 - job:
     name: ansible-role-tests-2.6-py2
     description: ansible-role tests against stable-2.6 Ansible with Python 2
@@ -83,11 +79,42 @@
       pip: pip3
       ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.6"
 
-# END: TMP while stable != stable-2.6
+##
+# stable-2.5
 - job:
-    name: ansible-role-tests-devel-py2
-    description: ansible-role tests against devel Ansible with Python 2
+    name: ansible-role-tests-2.5-py2
+    description: ansible-role tests against stable-2.5 Ansible with Python 2
     parent: ansible-role-tests-base
     vars:
       pip: pip2
-      ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
+      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.5"
+
+- job:
+    name: ansible-role-tests-2.5-py3
+    description: ansible-role tests against stable-2.5 Ansible with Python 3
+    parent: ansible-role-tests-base
+    vars:
+      pip: pip3
+      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.5"
+
+
+
+
+
+###
+# Old jobs, delete once network-engine has been updated
+- job:
+    name: ansible-role-tests-stable-py2
+    description: ansible-role tests against stable Ansible with Python 2
+    parent: ansible-role-tests-base
+    vars:
+      pip: pip2
+      ansible_pip_package: ansible
+
+- job:
+    name: ansible-role-tests-stable-py3
+    description: ansible-role tests against stable Ansible with Python 3
+    parent: ansible-role-tests-base
+    vars:
+      pip: pip3
+      ansible_pip_package: ansible
