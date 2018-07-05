@@ -96,25 +96,3 @@
     vars:
       pip: pip3
       ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.5"
-
-
-
-
-
-###
-# Old jobs, delete once network-engine has been updated
-- job:
-    name: ansible-role-tests-stable-py2
-    description: ansible-role tests against stable Ansible with Python 2
-    parent: ansible-role-tests-base
-    vars:
-      pip: pip2
-      ansible_pip_package: ansible
-
-- job:
-    name: ansible-role-tests-stable-py3
-    description: ansible-role tests against stable Ansible with Python 3
-    parent: ansible-role-tests-base
-    vars:
-      pip: pip3
-      ansible_pip_package: ansible
