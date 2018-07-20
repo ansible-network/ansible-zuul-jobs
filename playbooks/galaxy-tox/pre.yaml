@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+
+  tasks:
+    - shell: dnf -y install dnf-plugins-core
+      become: true
+    - shell: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+      become: true
+    - shell: dnf -y install docker-ce
+      become: true
+    - shell: systemctl start docker
+      become: true
+    - shell: pwd
+    - shell: usermod -aG docker zuul-worker
+      become: true
+    - shell: newgrp docker
+      become: true
+    - shell: dnf -y install libselinux-python
+      become: true
+    - shell: type tox || pip install --user tox

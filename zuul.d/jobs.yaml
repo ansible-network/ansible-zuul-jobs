@@ -96,3 +96,13 @@
     vars:
       pip: pip3
       ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.5"
+
+- job:
+    name: galaxy-tox
+    pre-run: playbooks/galaxy-tox/pre.yaml
+    run: playbooks/galaxy-tox/run.yaml
+    nodeset:
+      nodes:
+        - name: testvm
+          label: dib-fedora-27
+    timeout: 3600
