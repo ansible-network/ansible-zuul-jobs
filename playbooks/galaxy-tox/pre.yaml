@@ -11,8 +11,7 @@
       become: true
     - shell: systemctl start docker
       become: true
-    - shell: pwd
-    - shell: usermod -aG docker zuul-worker
+    - shell: "usermod -aG docker {{ ansible_user }}"
       become: true
     - shell: newgrp docker
       become: true
