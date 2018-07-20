@@ -3,7 +3,6 @@
 - hosts: all
 
   tasks:
-    - debug: var=zuul.project.src_dir
     - command: tox --sitepackages
       args:
         chdir: "{{ zuul.project.src_dir }}"

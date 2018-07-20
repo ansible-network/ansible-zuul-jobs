@@ -17,5 +17,6 @@
       become: true
     - shell: dnf -y install libselinux-python
       become: true
+    - shell: dnf -y remove ansible
+      become: true
     - shell: type tox || pip install --user tox
-    - shell: type ansible || pip uninstall -y ansible
