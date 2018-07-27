@@ -8,8 +8,9 @@
     state: forcereinstall
     executable: "{{ pip }}"
 
-- name: Galaxy install network-engine
-  command: "/home/zuul-worker/.local/bin/ansible-galaxy install ansible-network.network-engine"
+- name: debug
+  debug:
+    msg: "{{ ansible_user_dir }}/{{ zuul.project }}"
 
 - name: Install textfsm
   pip:
