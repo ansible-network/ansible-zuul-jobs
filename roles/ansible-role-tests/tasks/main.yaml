@@ -8,6 +8,10 @@
     state: forcereinstall
     executable: "{{ pip }}"
 
+- name: debug
+  debug:
+    msg: "{{ ansible_user_dir }}/{{ zuul.project }}"
+
 - name: Install textfsm
   pip:
     name: textfsm
