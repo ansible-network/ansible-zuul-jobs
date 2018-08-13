@@ -8,17 +8,19 @@
     state: forcereinstall
     executable: "{{ pip }}"
 
-- name: Install textfsm
-  pip:
-    name: textfsm
-    extra_args: --user
-    executable: "{{ pip }}"
+- name: Find any requirement.txt files
+  find:
+    file_type: file
+    path: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/"
+    patterns: "*requirements.txt"
+  register: requirements
 
-- name: Install pyang
+- name: Install requirements
   pip:
-    name: pyang
+    requirements: "{{ item.path }}"
     extra_args: --user
     executable: "{{ pip }}"
+  loop: "{{ requirements.files }}"
 
 # FIXME May need to add a sanity check that ansible --version returns the correct version of Python
 - name: Run integration tests
