@@ -69,7 +69,7 @@
     nodeset:
       nodes:
         - name: controller
-          label: f27-oci
+          label: dib-fedora-27
         - name: appliance
           label: ansible-network-vqfx
     vars:
