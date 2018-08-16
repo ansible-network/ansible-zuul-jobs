@@ -1,0 +1,4 @@
+---
+
+- name: Generate temporary SSH keys in /tmp
+  command: ssh-keygen -t rsa -b 2048 -N '' -f /tmp/id_rsa

@@ -1,0 +1,8 @@
+- hosts: controller
+
+  tasks:
+    - name: Include generate-ssh-keys role
+      include_role:
+        name: generate-ssh-keys
+    - command: cat /tmp/id_rsa.pub
+      register: cat_out

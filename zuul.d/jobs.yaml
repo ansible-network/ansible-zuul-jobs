@@ -61,6 +61,21 @@
       pip: pip2
       ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
 
+- job:
+    name: ansible-role-tests-vqfx-devel-py2
+    description: ansible-role tests against devel Ansible with Python 2
+    parent: ansible-role-tests-base
+    run: playbooks/ansible-role-vqfx-tests
+    nodeset:
+      nodes:
+        - name: controller
+          label: f27-oci
+        - name: appliance
+          label: ansible-network-vqfx
+    vars:
+      pip: pip2
+      ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
+
 ##
 # stable-2.6
 - job:
