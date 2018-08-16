@@ -2,7 +2,7 @@
     check:
       jobs:
         - tox-docs
-#        - tox-linters
+        - tox-linters
     gate:
       jobs:
         - tox-docs
