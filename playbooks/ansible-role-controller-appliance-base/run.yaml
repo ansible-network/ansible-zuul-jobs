@@ -4,9 +4,10 @@
     - name: Include generate-ssh-keys role
       include_role:
         name: generate-ssh-keys
-    - name: Set generated pubkey on appliance admin user
-      include_role:
-        name: set-admin-user-pubkey-junos
+    - name: Set pubkey on appliance admin user
+      junos_config:
+        - "set system login user admin class super-user authentication ssh-rsa {{ generate-ssh-keys_pubkey }}"
       vars:
-        pubkey: "{{ generate-ssh-keys_pubkey }}"
+        ansible_network_os: junos
+        ansible_user: admin
       delegate_to: appliance
