@@ -103,7 +103,7 @@
 - job:
     name: ansible-role-tests-vqfx-devel-py2
     description: ansible-role tests on Juniper VQFX with devel and Python 2
-    parent: ansible-roles-tests-vqfx-base
+    parent: ansible-role-tests-vqfx-base
     vars:
       pip: pip2
       ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
