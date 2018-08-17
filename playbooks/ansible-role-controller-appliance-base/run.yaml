@@ -4,5 +4,8 @@
     - name: Include generate-ssh-keys role
       include_role:
         name: generate-ssh-keys
-    - command: cat /tmp/id_rsa.pub
-      register: cat_out
+    - name: Set generated pubkey on appliance admin user
+      include_role:
+        name: set-admin-user-pubkey-junos
+      vars:
+        pubkey: "{{ generate-ssh-keys_pubkey }}"
