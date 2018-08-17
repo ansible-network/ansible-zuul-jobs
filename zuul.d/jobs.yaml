@@ -40,8 +40,6 @@
          Provides the ability to pip install different versions of Ansible
 
          Example ``ansible`` or ``"git+https://github.com/ansible/ansible.git@devel"``
-
-    parent: base-minimal-test
     run: playbooks/ansible-role-tests/run.yaml
     nodeset:
       nodes:
@@ -133,8 +131,7 @@
 - job:
     name: ansible-role-tests-vqfx-devel-py2
     description: ansible-role tests on Juniper VQFX with devel and Python 2
-    parent: ansible-role-tests-base
-    run: playbooks/ansible-role-vqfx-tests
+    parent: ansible-role-controller-appliance-base
     nodeset:
       nodes:
         - name: controller
