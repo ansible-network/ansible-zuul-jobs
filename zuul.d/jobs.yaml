@@ -97,47 +97,13 @@
       ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.5"
 
 ##
-# Ansible role base job on appliances
-#
-
-- job:
-    name: ansible-role-controller-appliance-base
-    description: |
-      Parent job for ``ansible role`` tests for testing against different
-      Ansible and Python versions
-
-      Responds to these variables:
-
-      .. zuul:jobvar:: pip
-
-         Name of pip binary to use to install dependencies to allow testing
-         against different Python versions.
-
-         Example ``pip2`` or ``pip3``
-
-      .. zuul:jobvar:: ansible_pip_package
-
-         Provides the ability to pip install different versions of Ansible
-
-         Example ``ansible`` or ``"git+https://github.com/ansible/ansible.git@devel"``
-
-    parent: base-controller-appliance-minimal-test
-    run: playbooks/ansible-role-controller-appliance-base/run.yaml
-
-##
 # Ansible role jobs on appliances with devel branch and Python 2
 #
 
 - job:
     name: ansible-role-tests-vqfx-devel-py2
     description: ansible-role tests on Juniper VQFX with devel and Python 2
-    parent: ansible-role-controller-appliance-base
-    nodeset:
-      nodes:
-        - name: controller
-          label: dib-fedora-27
-        - name: appliance
-          label: ansible-network-vqfx
+    parent: ansible-roles-tests-vqfx-base
     vars:
       pip: pip2
       ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
