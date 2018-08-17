@@ -9,3 +9,4 @@
         name: set-admin-user-pubkey-junos
       vars:
         pubkey: "{{ generate-ssh-keys_pubkey }}"
+      delegate_to: appliance
