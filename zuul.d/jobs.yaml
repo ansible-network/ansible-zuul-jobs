@@ -41,6 +41,7 @@
 
          Example ``ansible`` or ``"git+https://github.com/ansible/ansible.git@devel"``
 
+    parent: base-minimal-test
     run: playbooks/ansible-role-tests/run.yaml
     nodeset:
       nodes:
