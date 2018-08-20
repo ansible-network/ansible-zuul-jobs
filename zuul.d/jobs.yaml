@@ -107,3 +107,7 @@
     vars:
       pip: pip2
       ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
+    host-vars:
+      appliance:
+        ansible_network_os: junos
+        ansible_user: admin
