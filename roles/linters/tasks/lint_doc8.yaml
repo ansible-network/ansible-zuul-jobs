@@ -1,6 +1,6 @@
 ---
 - name: Install doc8
-  shell: type doc8 || pip install --user ansible
+  shell: type doc8 || pip install --user doc8
 
 - name: Run doc8
   shell: >
