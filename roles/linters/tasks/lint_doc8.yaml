@@ -1,4 +1,7 @@
 ---
+- name: Install doc8
+  shell: type doc8 || pip install --user ansible
+
 - name: Run doc8
   shell: >
     find * -name "*.rst" | xargs --no-run-if-empty doc8
