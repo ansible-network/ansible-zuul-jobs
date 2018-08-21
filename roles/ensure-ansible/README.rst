@@ -1,1 +1,0 @@
-Ensure ansible is installed

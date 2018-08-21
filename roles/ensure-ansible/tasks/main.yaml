@@ -1,3 +1,0 @@
----
-- name: Ensure ansible is installed
-  shell: type ansible || pip install --user ansible
