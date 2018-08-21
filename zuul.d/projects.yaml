@@ -1,8 +1,9 @@
 - project:
     check:
       jobs:
-#        - tox-linters
-        - noop
+        - tox-docs
+        - tox-linters
     gate:
       jobs:
+        - tox-docs
         - tox-linters
