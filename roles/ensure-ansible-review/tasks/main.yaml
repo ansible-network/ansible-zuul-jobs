@@ -1,3 +1,0 @@
----
-- name: Ensure ansible-review is installed
-  shell: type ansible-review || pip install --user ansible-review
