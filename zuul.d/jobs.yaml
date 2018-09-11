@@ -4,6 +4,7 @@
     abstract: true
     description: |
       The base job for the Ansible Network installation of Zuul.
+    pre-run: playbooks/base/pre.yaml
 
 ##
 # `ansible-test sanity`
