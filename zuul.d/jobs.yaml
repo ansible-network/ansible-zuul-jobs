@@ -1,3 +1,10 @@
+- job:
+    name: base
+    parent: base-minimal
+    abstract: true
+    description: |
+      The base job for the Ansible Network installation of Zuul.
+
 ##
 # `ansible-test sanity`
 # Single job tests multiple Python versions
