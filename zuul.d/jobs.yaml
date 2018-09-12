@@ -11,6 +11,7 @@
 #
 - job:
     name: ansible-test-sanity
+    parent: base-minimal-test
     description: ansible-test sanity
     run: playbooks/ansible-test-sanity/run.yaml
     required-projects:
