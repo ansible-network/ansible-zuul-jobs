@@ -45,16 +45,14 @@
     path: "{{ unbound_confd }}"
     state: directory
 
-# TODO: Move this to /etc/unbound/conf.d ?
 - name: Configure unbound forwarding
   become: yes
   template:
-    dest: /etc/unbound/forwarding.conf
+    dest: "{{ unbound_confd }}/forwarding.conf"
     owner: root
     group: root
     mode: 0644
     src: forwarding.conf.j2
-  register: forwarding_config
   notify:
     - Restart unbound
 
@@ -66,7 +64,6 @@
     group: root
     mode: 0644
     src: ttl.conf.j2
-  register: ttl_config
   notify:
     - Restart unbound
 
