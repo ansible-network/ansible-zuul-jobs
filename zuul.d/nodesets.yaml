@@ -1,0 +1,5 @@
+- nodeset:
+    name: centos-7
+    nodes:
+      - name: centos-7
+        label: ansible-centos-7
