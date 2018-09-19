@@ -4,8 +4,6 @@
     abstract: true
     description: |
       The base job for the Ansible Network installation of Zuul.
-    # TODO(pabelanger): Move this to base-minimal for the long term.
-    nodeset: centos-7
 
 ##
 # `ansible-test sanity`
