@@ -24,6 +24,6 @@
 
 # FIXME May need to add a sanity check that ansible --version returns the correct version of Python
 - name: Run integration tests
-  command: "/home/zuul-worker/.local/bin/ansible-playbook --inventory ./inventory test.yml -vv"
+  command: ansible-playbook --inventory ./inventory test.yml -vv
   args:
     chdir: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/tests/"
