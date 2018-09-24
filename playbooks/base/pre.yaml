@@ -8,6 +8,8 @@
       include_role:
         name: configure-unbound
 
+- hosts: all
+  tasks:
     - name: Run validate-host role
       include_role:
         name: validate-host
