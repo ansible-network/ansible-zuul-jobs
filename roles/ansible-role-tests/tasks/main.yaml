@@ -3,7 +3,7 @@
 
 - name: Install the required version of Ansible
   pip:
-    name: "{{ ansible_pip_package }}"
+    name: "file://{{ ansible_user_dir }}/{{ zuul.projects['github.com/ansible/ansible'].src_dir }}"
     extra_args: --user
     state: forcereinstall
     executable: "{{ pip }}"

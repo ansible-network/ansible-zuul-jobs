@@ -41,13 +41,10 @@
 
          Example ``pip2`` or ``pip3``
 
-      .. zuul:jobvar:: ansible_pip_package
-
-         Provides the ability to pip install different versions of Ansible
-
-         Example ``ansible`` or ``"git+https://github.com/ansible/ansible.git@devel"``
-
     run: playbooks/ansible-role-tests/run.yaml
+    required-projects:
+      - name: github.com/ansible/ansible
+        override-checkout: devel
     nodeset: fedora-latest
 
 # All Ansible Core versions that are supported since Ansible 2.5 need to be listed here
@@ -61,7 +58,6 @@
     parent: ansible-role-tests-base
     vars:
       pip: pip2
-      ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
 
 - job:
     name: ansible-role-tests-devel-py3
@@ -69,7 +65,6 @@
     parent: ansible-role-tests-base
     vars:
       pip: pip3
-      ansible_pip_package: "git+https://github.com/ansible/ansible.git@devel"
 
 ##
 # stable-2.7
@@ -77,17 +72,21 @@
     name: ansible-role-tests-2.7-py2
     description: ansible-role tests against stable-2.7 Ansible with Python 2
     parent: ansible-role-tests-base
+    required-projects:
+      - name: github.com/ansible/ansible
+        override-checkout: stable-2.7
     vars:
       pip: pip2
-      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.7"
 
 - job:
     name: ansible-role-tests-2.7-py3
     description: ansible-role tests against stable-2.7 Ansible with Python 3
     parent: ansible-role-tests-base
+    required-projects:
+      - name: github.com/ansible/ansible
+        override-checkout: stable-2.7
     vars:
       pip: pip3
-      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.7"
 
 ##
 # stable-2.6
@@ -95,17 +94,21 @@
     name: ansible-role-tests-2.6-py2
     description: ansible-role tests against stable-2.6 Ansible with Python 2
     parent: ansible-role-tests-base
+    required-projects:
+      - name: github.com/ansible/ansible
+        override-checkout: stable-2.6
     vars:
       pip: pip2
-      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.6"
 
 - job:
     name: ansible-role-tests-2.6-py3
     description: ansible-role tests against stable-2.6 Ansible with Python 3
     parent: ansible-role-tests-base
+    required-projects:
+      - name: github.com/ansible/ansible
+        override-checkout: stable-2.6
     vars:
       pip: pip3
-      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.6"
 
 ##
 # stable-2.5
@@ -113,14 +116,18 @@
     name: ansible-role-tests-2.5-py2
     description: ansible-role tests against stable-2.5 Ansible with Python 2
     parent: ansible-role-tests-base
+    required-projects:
+      - name: github.com/ansible/ansible
+        override-checkout: stable-2.5
     vars:
       pip: pip2
-      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.5"
 
 - job:
     name: ansible-role-tests-2.5-py3
     description: ansible-role tests against stable-2.5 Ansible with Python 3
     parent: ansible-role-tests-base
+    required-projects:
+      - name: github.com/ansible/ansible
+        override-checkout: stable-2.5
     vars:
       pip: pip3
-      ansible_pip_package: "git+https://github.com/ansible/ansible.git@stable-2.5"
