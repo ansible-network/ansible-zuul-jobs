@@ -84,13 +84,13 @@
 - name: Run ansible-test against Python 3.6
   command: "{{ ansible_path }}/test/runner/ansible-test sanity --python 3.6 {{ standard_options }} {{ skip_options }} {{ test_targets }}"
 
+# NOTE(pabelanger): Skip python2.6 here, since this is fedora-28.
 # Secondly, run each of the SanityMultipleVersion tests against the remaining available Python versions
 - name: Run ansible-test for SanityMultipleVersion
   command: "{{ ansible_path }}/test/runner/ansible-test sanity --python {{ item }} {{ standard_options }} --test ansible-doc --test compile --test import {{ test_targets }}"
   with_items:
-    - "2.6"
     - "2.7"
-    - "3.5"
+    - "3.6"
 
 ##
 # Check for failures
