@@ -1,0 +1,29 @@
+- project-template:
+    name: system-required
+    description: |
+      Jobs that *every* project in Ansible Network CI should have by default.
+
+      This is automatically added to all projects in Ansible Network CI, no
+      repository should use this directly.
+    # Include a check queue so that initially every repo has a check queue
+    # and we can report invalid zuul.yaml files.
+    check:
+      jobs: []
+    merge-check:
+      jobs:
+        - noop
+
+- project-template:
+    name: noop-jobs
+    description: |
+      This template runs no jobs, it is needed if a project does not use
+      any single job so that changes can get merged.
+
+      Do not use this with projects that have jobs defined in the gate
+      pipeline.
+    check:
+      jobs:
+        - noop
+    gate:
+      jobs:
+        - noop
