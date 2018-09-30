@@ -27,3 +27,14 @@
     gate:
       jobs:
         - noop
+
+- project-template:
+    name: release-notes-jobs
+    description: |
+      Runs the release notes test and publish jobs.
+    check:
+      jobs:
+        - build-reno-releasenotes
+    gate:
+      jobs:
+        - build-reno-releasenotes
