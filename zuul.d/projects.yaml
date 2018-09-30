@@ -1,9 +1,9 @@
 - project:
+    templates:
+      - build-tox-docs
     check:
       jobs:
-        - tox-docs
         - tox-linters
     gate:
       jobs:
-        - tox-docs
         - tox-linters

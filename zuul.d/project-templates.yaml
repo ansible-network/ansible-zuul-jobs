@@ -29,12 +29,14 @@
         - noop
 
 - project-template:
-    name: release-notes-jobs
+    name: build-tox-docs
     description: |
-      Runs the release notes test and publish jobs.
+      Runs tox docs jobs without publishing.
     check:
       jobs:
-        - build-reno-releasenotes
+        - tox-docs:
+            nodeset: fedora-latest-1vcpu
     gate:
       jobs:
-        - build-reno-releasenotes
+        - tox-docs:
+            nodeset: fedora-latest-1vcpu
