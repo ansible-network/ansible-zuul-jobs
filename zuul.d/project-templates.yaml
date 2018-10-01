@@ -9,7 +9,7 @@
     # and we can report invalid zuul.yaml files.
     check:
       jobs: []
-    merge-check:
+    unlabel-on-push:
       jobs:
         - noop
 
