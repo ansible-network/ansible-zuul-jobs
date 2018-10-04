@@ -1,8 +1,3 @@
-- name: Ensure that Unbound is installed
-  become: yes
-  package:
-    name: unbound
-
 # ansible_default_ipv6 can either be undefined (no ipv6) or blank (no
 # routable address).  We only want to use ipv6 if it's available &
 # routable; combine these checks into this fact.
