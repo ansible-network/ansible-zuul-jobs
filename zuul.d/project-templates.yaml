@@ -40,3 +40,14 @@
       jobs:
         - tox-docs:
             nodeset: fedora-latest-1vcpu
+
+- project-template:
+    name: ansible-role-release-jobs
+    description: |
+      Runs release jobs for an Ansible role.
+    pre-release:
+      jobs:
+        - release-ansible-role
+    release:
+      jobs:
+        - release-ansible-role
