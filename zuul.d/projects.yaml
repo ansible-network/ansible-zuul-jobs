@@ -4,6 +4,12 @@
     check:
       jobs:
         - tox-linters
+        - tox-py27:
+            nodeset: fedora-latest-4vcpu
+        - tox-py35:
+            nodeset: fedora-latest-4vcpu
+        - tox-py36:
+            nodeset: fedora-latest-4vcpu
     gate:
       jobs:
         - tox-linters
