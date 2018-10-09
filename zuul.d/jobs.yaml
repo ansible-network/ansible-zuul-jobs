@@ -5,6 +5,7 @@
     description: |
       The base job for the Ansible Network installation of Zuul.
     pre-run: playbooks/base/pre.yaml
+    nodeset: fedora-latest-1vcpu
 
 ##
 # `ansible-test sanity`
