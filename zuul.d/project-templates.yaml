@@ -42,6 +42,19 @@
             nodeset: fedora-latest-1vcpu
 
 - project-template:
+    name: ansible-python-jobs
+    description: |
+      Runs Ansible PTI jobs for python.
+    check:
+      jobs:
+        - tox-linters:
+            nodeset: fedora-latest-1vcpu
+    gate:
+      jobs:
+        - tox-linters:
+            nodeset: fedora-latest-1vcpu
+
+- project-template:
     name: ansible-role-release-jobs
     description: |
       Runs release jobs for an Ansible role.

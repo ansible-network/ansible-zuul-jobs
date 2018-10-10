@@ -1,9 +1,4 @@
 - project:
     templates:
+      - ansible-python-jobs
       - build-tox-docs
-    check:
-      jobs:
-        - tox-linters
-    gate:
-      jobs:
-        - tox-linters
