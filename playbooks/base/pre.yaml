@@ -1,5 +1,11 @@
 - hosts: all
   tasks:
+    - name: Run ensure-output-dirs role
+      include_role:
+        name: ensure-output-dirs
+
+- hosts: all
+  tasks:
     # NOTE(pabelanger): We run this role in its own play to ensure unbound is
     # restarted before proceeding with any other role. This is because we use
     # notify / handler to restart the unbound service. With ansible notify
