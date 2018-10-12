@@ -1,5 +1,0 @@
----
-- hosts: all
-  roles:
-    - role: ensure-ansible
-    - role: upload-galaxy
