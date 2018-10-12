@@ -19,7 +19,7 @@
       # Needed for access to ansible-test
       - name: ansible/ansible
         override-checkout: devel
-    nodeset: fedora-latest
+    nodeset: fedora-latest-4vcpu
 
 ##
 # ansible-role-tests
@@ -45,7 +45,7 @@
     required-projects:
       - name: github.com/ansible/ansible
         override-checkout: devel
-    nodeset: fedora-latest
+    nodeset: fedora-latest-4vcpu
 
 # All Ansible Core versions that are supported since Ansible 2.5 need to be listed here
 # as the job definitions are used by all repos
