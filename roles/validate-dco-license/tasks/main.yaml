@@ -14,7 +14,7 @@
         fi
       done
       exit $result
-    chdir: "{{ zuul.project.src_dir }}"
+    chdir: "{{ zuul_work_dir }}"
     executable: /bin/bash
   register: _dco
   failed_when: _dco.rc > 1

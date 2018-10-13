@@ -6,3 +6,4 @@ dco_license_failure: |
   that committer has the rights to submit this work under the same license and
   agrees to a Developer Certificate of Origin
   (see http://developercertificate.org/ for more information).
+zuul_work_dir: "{{ zuul.project.src_dir }}"
