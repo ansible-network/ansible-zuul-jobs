@@ -17,8 +17,7 @@
     run: playbooks/ansible-test-sanity/run.yaml
     required-projects:
       # Needed for access to ansible-test
-      - name: ansible/ansible
-        override-checkout: devel
+      - name: github.com/ansible/ansible
     nodeset: fedora-latest-4vcpu
 
 ##
