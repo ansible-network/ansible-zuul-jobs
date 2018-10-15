@@ -6,6 +6,16 @@
       The base job for the Ansible Network installation of Zuul.
     pre-run: playbooks/base/pre.yaml
 
+- job:
+    name: ansible-tox-functional
+    parent: tox
+    description: |
+      Run functional unit tests.
+
+      Uses tox with the ``functional`` environment.
+    vars:
+      tox_envlist: functional
+
 ##
 # `ansible-test sanity`
 # Single job tests multiple Python versions
