@@ -2,5 +2,8 @@
     templates:
       - ansible-python-jobs
       - build-tox-docs
+    check:
+      jobs:
+        - dco-license
     gate:
       queue: ansible-network/zuul-config
