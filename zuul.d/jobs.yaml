@@ -6,6 +6,24 @@
       The base job for the Ansible Network installation of Zuul.
     pre-run: playbooks/base/pre.yaml
 
+- job:
+    name: ansible-network-tox-base
+    parent: tox
+    abstract: true
+    post-run: playbooks/ansible-network-tox-base/post.yaml
+
+- job:
+    name: ansible-network-tox-py27
+    parent: ansible-network-tox-base
+    vars:
+      tox_envlist: py27
+
+- job:
+    name: ansible-network-tox-py36
+    parent: ansible-network-tox-base
+    vars:
+      tox_envlist: py36
+
 ##
 # `ansible-test sanity`
 # Single job tests multiple Python versions
