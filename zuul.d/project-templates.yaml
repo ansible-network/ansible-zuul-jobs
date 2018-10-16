@@ -64,3 +64,11 @@
     release:
       jobs:
         - release-ansible-role
+
+- project-template:
+    name: ansible-role-tag-jobs
+    description: |
+      Runs tag jobs for an Ansible role.
+    tag:
+      jobs:
+        - release-ansible-role
