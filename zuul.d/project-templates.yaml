@@ -49,10 +49,14 @@
       jobs:
         - tox-linters:
             nodeset: fedora-latest-1vcpu
+        - tox-py27:
+            nodeset: centos-7-1vcpu
     gate:
       jobs:
         - tox-linters:
             nodeset: fedora-latest-1vcpu
+        - tox-py27:
+            nodeset: centos-7-1vcpu
 
 - project-template:
     name: ansible-role-release-jobs
