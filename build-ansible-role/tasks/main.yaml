@@ -1,0 +1,4 @@
+- name: Build ansible role
+  command: mazer build .
+  args:
+    chdir: "{{ ansible_role_dir }}"
