@@ -5,10 +5,12 @@
 
       This is automatically added to all projects in Ansible Network CI, no
       repository should use this directly.
-    # Include a check queue so that initially every repo has a check queue
-    # and we can report invalid zuul.yaml files.
     check:
-      jobs: []
+      jobs:
+        - dco-license
+    gate:
+      jobs:
+        - dco-license
     unlabel-on-push:
       jobs:
         - noop
