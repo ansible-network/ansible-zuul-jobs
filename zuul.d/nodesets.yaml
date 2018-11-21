@@ -13,11 +13,11 @@
 - nodeset:
     name: fedora-latest-1vcpu
     nodes:
-      - name: fedora-28
-        label: ansible-fedora-28-1vcpu
+      - name: fedora-29
+        label: ansible-fedora-29-1vcpu
 
 - nodeset:
     name: fedora-latest-4vcpu
     nodes:
-      - name: fedora-28
-        label: ansible-fedora-28-4vcpu
+      - name: fedora-29
+        label: ansible-fedora-29-4vcpu
