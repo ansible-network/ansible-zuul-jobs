@@ -27,7 +27,3 @@
     - name: Run configure-mirrors-fork role
       include_role:
         name: configure-mirrors-fork
-      vars:
-        # NOTE(pabelanger): This assumes all our nodes are fedora, we should
-        # fix this.
-        package_mirror: http://download.fedoraproject.org/pub/fedora/linux
