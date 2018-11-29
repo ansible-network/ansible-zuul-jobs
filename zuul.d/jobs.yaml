@@ -24,6 +24,13 @@
     vars:
       tox_envlist: py36
 
+- job:
+    name: ansible-network-tox-py37
+    parent: ansible-network-tox-base
+    vars:
+      tox_envlist: py37
+    nodeset: fedora-29-1vcpu
+
 ##
 # `ansible-test sanity`
 # Single job tests multiple Python versions
