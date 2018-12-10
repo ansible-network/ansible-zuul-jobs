@@ -74,3 +74,6 @@
     tag:
       jobs:
         - release-ansible-role
+        - release-ansible-annoucement:
+            dependencies:
+              - release-ansible-role
