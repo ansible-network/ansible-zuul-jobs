@@ -2,5 +2,7 @@
     templates:
       - ansible-python-jobs
       - build-tox-docs
+    check:
+      queue: ansible-network/zuul-config
     gate:
       queue: ansible-network/zuul-config
