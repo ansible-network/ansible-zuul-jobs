@@ -24,6 +24,17 @@
     vars:
       tox_envlist: py36
 
+- job:
+    name: build-ansible-role-tarball
+    parent: tox
+    description:
+      Build an ansible role tarball but do not upload it anywhere.
+    required-projects:
+      - name: github.com/ansible/mazer
+    vars:
+      tox_envlist: venv
+      tox_extra_args: -vv -- mazer build .
+
 ##
 # `ansible-test sanity`
 # Single job tests multiple Python versions
