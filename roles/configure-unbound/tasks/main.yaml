@@ -62,6 +62,12 @@
   notify:
     - Restart unbound
 
+- name: Update resolv.conf to localhost
+  become: yes
+  copy:
+    content: nameserver 127.0.0.1
+    dest: /etc/resolv.conf
+
 - name: Start unbound
   become: yes
   service:
