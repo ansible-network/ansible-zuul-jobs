@@ -29,7 +29,6 @@
     parent: ansible-network-tox-base
     vars:
       tox_envlist: py37
-    nodeset: fedora-29-1vcpu
 
 ##
 # `ansible-test sanity`
