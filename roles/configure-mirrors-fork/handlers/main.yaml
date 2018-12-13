@@ -7,13 +7,6 @@
   tags:
     - skip_ansible_lint
 
-- name: Update dnf cache
-  become: yes
-  command: "{{ item }}"
-  with_items:
-    - dnf clean all
-    - dnf makecache
-
 - name: Update yum cache
   become: yes
   command: "{{ item }}"
