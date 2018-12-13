@@ -1,10 +1,9 @@
-# OpenDNS
-unbound_primary_nameserver_v6: "2620:0:ccc::2"
-unbound_primary_nameserver_v4: "208.67.222.222"
-
-# Google
-unbound_secondary_nameserver_v6: "2001:4860:4860::8888"
-unbound_secondary_nameserver_v4: "8.8.8.8"
+# 1.1.1.1
+unbound_primary_nameserver_v6: "2606:4700:4700::1111"
+unbound_primary_nameserver_v4: "1.1.1.1"
+ 
+unbound_secondary_nameserver_v6: "2606:4700:4700::1001"
+unbound_secondary_nameserver_v4: "1.0.0.1"
 
 # Time to live maximum for  RRsets  and  messages  in  the  cache.
 # Default  is  86400  seconds  (1  day).  If the maximum kicks in,
