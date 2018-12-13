@@ -3,3 +3,8 @@
   service:
     name: unbound
     state: restarted
+
+- name: Wait for unbound
+  wait_for:
+    delay: 10
+    port: 53
