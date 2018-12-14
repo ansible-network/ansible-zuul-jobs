@@ -31,20 +31,6 @@
       tox_envlist: py37
 
 ##
-# `ansible-test sanity`
-# Single job tests multiple Python versions
-#
-- job:
-    name: ansible-test-sanity
-    parent: unittests
-    description: ansible-test sanity
-    run: playbooks/ansible-test-sanity/run.yaml
-    required-projects:
-      # Needed for access to ansible-test
-      - name: github.com/ansible/ansible
-    nodeset: fedora-latest-4vcpu
-
-##
 # ansible-role-tests
 #
 
