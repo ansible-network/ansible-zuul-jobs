@@ -17,6 +17,7 @@
     parent: ansible-network-tox-base
     vars:
       tox_envlist: py27
+    nodeset: centos-7-1vcpu
 
 - job:
     name: ansible-network-tox-py36
