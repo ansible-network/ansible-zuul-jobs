@@ -1,5 +1,6 @@
 - project:
     templates:
-      - noop-jobs
+      - ansible-python-jobs
+      - build-tox-docs
     gate:
       queue: ansible-network/zuul-config
