@@ -50,6 +50,7 @@
     src: forwarding.conf.j2
   notify:
     - Restart unbound
+    - Wait for unbound
 
 - name: Configure unbound TTL
   become: yes
@@ -61,6 +62,7 @@
     src: ttl.conf.j2
   notify:
     - Restart unbound
+    - Wait for unbound
 
 - name: Update resolv.conf to localhost
   become: yes
