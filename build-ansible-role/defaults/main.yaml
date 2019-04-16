@@ -1,0 +1,1 @@
+ansible_role_dir: "{{ zuul.project.src_dir }}"
