@@ -1,5 +1,0 @@
-- project:
-    templates:
-      - noop-jobs
-    gate:
-      queue: ansible-network/zuul-config
